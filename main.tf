@@ -11,7 +11,7 @@ resource "aws_security_group" "allow_ssh" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.allowed_ssh_cidrs
   }
 
   egress {
@@ -31,7 +31,7 @@ resource "aws_instance" "centos_instance" {
   ami             = "ami-0aa938b5c246ef111"
   instance_type   = "t2.micro"
   key_name        = "dev.terraform.immaterial-net"
-  security_groups = ["aws_security_group.allow_ssh.id"]
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
   tags            = {
     Name = "centos_instance"
   }
