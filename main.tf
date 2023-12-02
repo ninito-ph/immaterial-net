@@ -2,6 +2,14 @@ provider "aws" {
   region = "eu-west-2"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "ninitos-immaterial-net-terraform-state-bucket"
+    key    = ".terraform"
+    region = "eu-west-2"
+  }
+}
+
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow SSH inbound traffic"
